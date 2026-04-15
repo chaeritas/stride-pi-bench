@@ -1,16 +1,20 @@
-FROM ghcr.io/astral-sh/uv:python3.13-bookworm
+FROM python:3.13-slim-bookworm
 
-RUN adduser agent
+RUN adduser --disabled-password agent
 USER agent
 WORKDIR /home/agent
 
-COPY pyproject.toml README.md ./
-COPY src src
+COPY --chown=agent pyproject.toml README.md ./
+COPY --chown=agent src src
 
-RUN \
-    --mount=type=cache,target=/home/agent/.cache/uv,uid=1000 \
-    uv sync
+RUN pip install --no-cache-dir --user \
+    "a2a-sdk>=0.2" \
+    "uvicorn[standard]>=0.20" \
+    "litellm>=1.0" \
+    "starlette>=0.27"
 
-ENTRYPOINT ["uv", "run", "src/server.py"]
+ENV PATH="/home/agent/.local/bin:${PATH}"
+
+ENTRYPOINT ["python", "src/server.py"]
 CMD ["--host", "0.0.0.0"]
 EXPOSE 9009
