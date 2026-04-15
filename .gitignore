@@ -1,0 +1,29 @@
+# Secrets
+.env
+.env.*
+
+# STRIDE Engine (proprietary, patent protected)
+backend_tabular*.py
+stride_decompose.py
+embedding_svd.py
+
+# Data files
+*.json
+!scenario.toml
+!amber-manifest.json5
+!pyproject.toml
+
+# Results
+results/
+output/
+stride_pibench_results/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# OS
+.DS_Store
