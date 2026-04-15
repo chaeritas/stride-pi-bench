@@ -8,10 +8,9 @@ COPY --chown=agent pyproject.toml README.md ./
 COPY --chown=agent src src
 
 RUN pip install --no-cache-dir --user \
-    "a2a-sdk>=0.2" \
+    "a2a-sdk[http-server]>=0.2" \
     "uvicorn[standard]>=0.20" \
-    "litellm>=1.0" \
-    "starlette>=0.27"
+    "litellm>=1.0"
 
 ENV PATH="/home/agent/.local/bin:${PATH}"
 
